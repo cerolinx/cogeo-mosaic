@@ -82,6 +82,8 @@ class MosaicJSON(BaseModel, validate_assignment=True):
     data_type: Optional[str] = None
     colormap: Optional[Dict[int, Tuple[int, int, int, int]]] = None
     layers: Optional[Dict] = None
+    overview_asset: Optional[str] = None
+    overview_level: Optional[int] = Field(0, ge=0, le=30)
 
     @field_validator("tilematrixset")
     def parse_tms(cls, value) -> Optional[morecantile.TileMatrixSet]:

@@ -99,6 +99,9 @@ class BaseBackend(BaseReader):
                 self.mosaic_def.maxzoom if mosaic_tms == self.tms else self.tms.maxzoom
             )
 
+        self.overview_asset = self.mosaic_def.overview_asset
+        self.overview_level = self.mosaic_def.overview_level
+
     @abc.abstractmethod
     def _read(self) -> MosaicJSON:
         """Fetch mosaic definition"""
@@ -235,6 +238,8 @@ class BaseBackend(BaseReader):
     )
     def get_assets(self, x: int, y: int, z: int) -> List[str]:
         """Find assets."""
+        if self.overview_asset and self.overview_level and  z <= self.overview_level:
+            return [self.overview_asset]
         quadkeys = self.find_quadkeys(Tile(x=x, y=y, z=z), self.quadkey_zoom)
         assets = list(
             dict.fromkeys(

@@ -16,6 +16,8 @@ class Info(BaseModel):
     name: Optional[str] = None
     quadkeys: List[str] = []
     tilematrixset: Optional[str] = None
+    overview_asset: Optional[str] = None
+    overview_level: Optional[int] = Field(0, ge=0, le=30)
 
     def __getitem__(self, item):
         """Access item like in Dict."""
